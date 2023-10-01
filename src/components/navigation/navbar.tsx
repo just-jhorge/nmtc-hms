@@ -65,7 +65,7 @@ export default function Navbar() {
                             <DropdownMenuItem>About</DropdownMenuItem>
                             <DropdownMenuItem>Services</DropdownMenuItem>
                             <DropdownMenuItem>
-                                <Button variant="destructive" className="w-full">
+                                <Button onClick={handleLogout} variant="destructive" className="w-full">
                                     Logout
                                 </Button>
                             </DropdownMenuItem>

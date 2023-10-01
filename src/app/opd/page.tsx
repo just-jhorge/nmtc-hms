@@ -1,5 +1,5 @@
 import React from "react";
 
 export default function page() {
-    return <div>OPD Page</div>;
+    return <div className="container py-16">OPD Page</div>;
 }

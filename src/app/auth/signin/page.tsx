@@ -1,6 +1,7 @@
 "use client";
 
 import * as z from "zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,8 +19,11 @@ const formSchema = z.object({
 });
 
 export default function Home() {
-    const supabase = createClientComponentClient();
+    const [loading, setLoading] = useState(false);
+
     const router = useRouter();
+    const supabase = createClientComponentClient();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -30,6 +34,7 @@ export default function Home() {
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
+            setLoading(true);
             const { data: authData, error } = await supabase.auth.signInWithPassword({
                 email: values.staffEmail,
                 password: values.password,
@@ -45,10 +50,15 @@ export default function Home() {
                 if (userData) {
                     router.refresh();
                     router.push(`/${userData.department}`);
+                    setLoading(false);
                 }
             }
+
+            setLoading(false);
         } catch (error) {
             console.log(error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -91,7 +101,7 @@ export default function Home() {
                             )}
                         />
                         <Button type="submit" className="w-full bg-emerald-800">
-                            Submit
+                            {loading ? "Loading..." : "Login"}
                         </Button>
                     </form>
                 </Form>
