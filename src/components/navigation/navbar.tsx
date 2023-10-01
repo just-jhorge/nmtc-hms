@@ -25,7 +25,7 @@ export default function Navbar() {
 
         if (!error) {
             router.refresh();
-            router.push("/auth");
+            router.push("/auth/signin");
         } else {
             console.log(error);
         }

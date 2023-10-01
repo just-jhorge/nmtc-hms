@@ -10,6 +10,8 @@ export const metadata: Metadata = {
     description: "A Demo app of a Hospital Management App for NMTC, Kumasi",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     const supabase = createServerComponentClient({ cookies });
 

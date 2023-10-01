@@ -7,7 +7,7 @@ export default function page() {
             <div className="text-center">
                 <h1>Welcome</h1>
                 <h3>Nursing and Midwifery Training College, Kumasi - HMS</h3>
-                <Link href="/auth">Login</Link>
+                <Link href="/auth/signin">Login</Link>
             </div>
         </div>
     );
