@@ -9,7 +9,7 @@ export default function Records() {
     const [newUser, setNewUser] = useState(false);
 
     useEffect(() => {
-        console.log(newUser);
+        // console.log(newUser);
     }, [newUser]);
 
     return (

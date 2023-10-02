@@ -14,7 +14,17 @@ const formSchema = z.object({
     name: z.string().min(8, {
         message: "Username must be at least 8 characters.",
     }),
-    age: z.preprocess((a) => parseInt(z.string().parse(a), 10), z.number().min(1).max(130)),
+    age: z.preprocess(
+        (a) => parseInt(z.string().parse(a), 10),
+        z
+            .number()
+            .min(1, {
+                message: "Age cannot be less than 1 year",
+            })
+            .max(130, {
+                message: "Age cannot be more than 130 years",
+            })
+    ),
     gender: z.string({
         required_error: "Please select your gender.",
     }),
@@ -128,6 +138,7 @@ export default function NewPatientForm() {
                                 <Textarea
                                     placeholder="Please enter patient's address"
                                     className="resize-none"
+                                    rows={5}
                                     {...field}
                                 />
                             </FormControl>
