@@ -4,6 +4,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import "../styles/globals.css";
 import type { Metadata } from "next";
 import Navbar from "@/components/navigation/navbar";
+import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
     title: "NMTC-HMS",
@@ -24,6 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <body>
                 {session && <Navbar />}
                 {children}
+                <Toaster />
             </body>
         </html>
     );

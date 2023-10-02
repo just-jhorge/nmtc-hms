@@ -49,7 +49,7 @@ export default function Home() {
 
                 if (userData) {
                     router.refresh();
-                    router.push(`/${userData.department}`);
+                    router.push(`/dashboard/${userData.department}`);
                     setLoading(false);
                 }
             }
