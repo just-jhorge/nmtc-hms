@@ -32,7 +32,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="fixed w-full bg-emerald-700 h-16 flex items-center justify-center">
+        <nav className="fixed z-[1000] w-full bg-emerald-700 h-16 flex items-center justify-center">
             <div className="container flex items-center justify-between">
                 <div className="font-bold text-white tracking-widest flex items-center gap-2">
                     <MdLocalHospital size={26} color="red" /> <p className="text-sm sm:text-xl">NMTC-HMS</p>

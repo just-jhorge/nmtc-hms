@@ -1,6 +1,6 @@
 import { getPatientsInLine } from "@/actions/getPatientsInLine";
-import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import Link from "next/link";
 
 export default async function page() {
     const patients = await getPatientsInLine();
@@ -34,7 +34,12 @@ export default async function page() {
                             <TableCell>{patient.fullname}</TableCell>
                             <TableCell>{patient.contact}</TableCell>
                             <TableCell className="text-right">
-                                <Button className="bg-emerald-500 text-xs sm:text-base">Check Vitals</Button>
+                                <Link
+                                    className="text-emerald-500 font-bold border-b-2 border-emerald-500 text-xs sm:text-base"
+                                    href={`/dashboard/opd/vitals/${patient.patientID}`}
+                                >
+                                    Check Vitals
+                                </Link>
                             </TableCell>
                         </TableRow>
                     ))}
