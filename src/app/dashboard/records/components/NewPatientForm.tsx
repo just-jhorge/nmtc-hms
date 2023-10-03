@@ -9,6 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
+import { useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import uniqid from "uniqid";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().min(8, {
@@ -37,10 +41,16 @@ const formSchema = z.object({
         .max(160, {
             message: "Bio must not be longer than 30 characters.",
         }),
+    status: z.string(),
 });
 
 export default function NewPatientForm() {
+    const [isLoading, setIsLoading] = useState(false);
+    const supabase = createClientComponentClient();
+    const router = useRouter();
+    const id = uniqid();
     const { toast } = useToast();
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -49,18 +59,47 @@ export default function NewPatientForm() {
             gender: "",
             contact: "",
             address: "",
+            status: "inLine",
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        toast({
-            title: "You submitted the following patient details:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-                </pre>
-            ),
-        });
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        try {
+            setIsLoading(true);
+
+            const { error } = await supabase.from("records").insert({
+                patientID: id.toUpperCase(),
+                fullname: values.name,
+                age: values.age,
+                gender: values.gender,
+                contact: values.contact,
+                address: values.address,
+                vitals: {},
+                status: "opd",
+            });
+
+            if (!error) {
+                toast({
+                    title: "Success",
+                    description: "Patient added to records successfully. Proceed to check vitals",
+                });
+                alert(`Patient ID is ${id.toUpperCase()}`);
+            } else {
+                toast({
+                    variant: "destructive",
+                    title: "Something went wrong",
+                    description: "There was an error adding the patient to records, please try again.",
+                });
+            }
+
+            router.refresh();
+            setIsLoading(false);
+        } catch (error) {
+            console.log(error);
+            setIsLoading(false);
+        } finally {
+            setIsLoading(false);
+        }
 
         form.reset();
     }
@@ -147,7 +186,7 @@ export default function NewPatientForm() {
                     )}
                 />
                 <Button type="submit" className="w-full">
-                    Submit
+                    {isLoading ? "Adding to records..." : "Submit"}
                 </Button>
             </form>
         </Form>

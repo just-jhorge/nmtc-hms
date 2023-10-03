@@ -34,9 +34,9 @@ export default function Navbar() {
     return (
         <nav className="fixed w-full bg-emerald-700 h-16 flex items-center justify-center">
             <div className="container flex items-center justify-between">
-                <Link href="/" className="font-bold text-white tracking-widest flex items-center gap-2">
+                <div className="font-bold text-white tracking-widest flex items-center gap-2">
                     <MdLocalHospital size={26} color="red" /> <p className="text-sm sm:text-xl">NMTC-HMS</p>
-                </Link>
+                </div>
                 <div className="hidden sm:flex items-center gap-10">
                     <ul className="flex items-center gap-5 text-white">
                         <Link href="/">
