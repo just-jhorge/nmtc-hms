@@ -1,6 +1,6 @@
+import Link from "next/link";
 import { getPatientsInLine } from "@/actions/getPatientsInLine";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import Link from "next/link";
 
 export default async function page() {
     const patients = await getPatientsInLine();
@@ -20,7 +20,7 @@ export default async function page() {
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[20px] sm:w-[60px]">S/N</TableHead>
-                        <TableHead className="w-[150px]">Patient ID</TableHead>
+                        <TableHead className="w-[60px] sm:w-[150px]">Patient ID</TableHead>
                         <TableHead>Full Name</TableHead>
                         <TableHead>Contact</TableHead>
                         <TableHead className="text-right">Action</TableHead>
@@ -35,8 +35,8 @@ export default async function page() {
                             <TableCell>{patient.contact}</TableCell>
                             <TableCell className="text-right">
                                 <Link
-                                    className="text-emerald-500 font-bold border-b-2 border-emerald-500 text-xs sm:text-base"
                                     href={`/dashboard/opd/vitals/${patient.patientID}`}
+                                    className="bg-emerald-500 hover:bg-emerald-800 transition text-white flex items-center justify-center text-center px-2 py-1 rounded-sm shadow-sm font-bold text-xs sm:text-base"
                                 >
                                     Check Vitals
                                 </Link>

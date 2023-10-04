@@ -1,12 +1,23 @@
 "use client";
 
-import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import * as z from "zod";
+import { useParams, useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+
 import { Patient } from "../../../../../../types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "@/components/ui/use-toast";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { vitalsFormSchema } from "@/schema/formSchemas";
 
 export default function Page() {
+    const [isLoading, setIsLoading] = useState(false);
     const [patient, setPatient] = useState<Patient | null>(null);
+    const router = useRouter();
     const supabase = createClientComponentClient();
     const { patientID } = useParams();
 
@@ -24,11 +35,117 @@ export default function Page() {
         // eslint-disable-next-line
     }, [patientID]);
 
+    const form = useForm<z.infer<typeof vitalsFormSchema>>({
+        resolver: zodResolver(vitalsFormSchema),
+        defaultValues: {
+            bloodPressure: 0,
+            bodyTemperature: 0,
+            oxygenSaturation: 0,
+            bloodGlucose: 0,
+            pulseRate: 0,
+            respiration: 0,
+        },
+    });
+
+    async function onSubmit(values: z.infer<typeof vitalsFormSchema>) {
+        try {
+            console.log(values);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <div className="container py-24 space-y-5">
             <h3 className="text-xl sm:text-2xl font-semibold">Vitals for {patient?.fullname}</h3>
             <div className="flex flex-col sm:flex-row gap-5 sm:gap-10 w-full">
-                <div className="w-full sm:w-3/4 py-5">Form for inputs go here</div>
+                <div className="w-full sm:w-3/4 py-5">
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                            <FormField
+                                control={form.control}
+                                name="bloodPressure"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Blood Pressure (mmHg)</FormLabel>
+                                        <FormControl>
+                                            <Input type="number" placeholder="Blood Pressure" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="bodyTemperature"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Body Temperature (&deg;C)</FormLabel>
+                                        <FormControl>
+                                            <Input type="number" placeholder="Body Temperature" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="oxygenSaturation"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Oxygen Saturation (%)</FormLabel>
+                                        <FormControl>
+                                            <Input type="number" placeholder="Oxygen Saturation" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="bloodGlucose"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Blood Glucose Level (mmol/L)</FormLabel>
+                                        <FormControl>
+                                            <Input type="number" placeholder="Blood Glucose Level" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="pulseRate"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Pulse Rate (bpm)</FormLabel>
+                                        <FormControl>
+                                            <Input type="number" placeholder="Pulse Rate" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <FormField
+                                control={form.control}
+                                name="respiration"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Respiration (bpm)</FormLabel>
+                                        <FormControl>
+                                            <Input type="number" placeholder="Respiration" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                            <Button type="submit" className="w-full">
+                                {isLoading ? "Adding to records..." : "Submit"}
+                            </Button>
+                        </form>
+                    </Form>
+                </div>
                 <div className="w-full sm:w-1/4 bg-gray-50 shadow-md rounded-sm px-2.5 py-5">
                     System suggestion goes here
                 </div>
