@@ -15,10 +15,13 @@ import { Button } from "@/components/ui/button";
 import { vitalsFormSchema } from "@/schema/formSchemas";
 
 export default function Page() {
+    const patientHealth = 'good'
     const [isLoading, setIsLoading] = useState(false);
     const [patient, setPatient] = useState<Patient | null>(null);
+    
     const router = useRouter();
     const supabase = createClientComponentClient();
+    
     const { patientID } = useParams();
 
     useEffect(() => {
@@ -153,7 +156,7 @@ export default function Page() {
                         </form>
                     </Form>
                 </div>
-                <div className="w-full sm:w-1/4 bg-gray-50 shadow-md rounded-sm px-2.5 py-5">
+                <div className={`w-full sm:w-1/4 ${patientHealth === 'good' ? 'bg-green-300' : 'bg-red-400'} shadow-md rounded-sm px-2.5 py-5`}>
                     System suggestion goes here
                 </div>
             </div>
