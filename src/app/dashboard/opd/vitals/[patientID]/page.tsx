@@ -64,7 +64,7 @@ export default function Page() {
 
     return (
         <div className="container py-24 space-y-5">
-            <h3 className="text-xl sm:text-2xl font-semibold">Vitals for {patient?.fullname}</h3>
+            <h3 className="text-xl sm:text-2xl font-semibold">Checking vitals for {patient?.patientID}</h3>
             <div className="flex flex-col sm:flex-row gap-5 sm:gap-10 w-full">
                 <div className="w-full sm:w-3/4 py-5">
                     <Form {...form}>
