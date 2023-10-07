@@ -5,6 +5,7 @@ import "../styles/globals.css";
 import type { Metadata } from "next";
 import Navbar from "@/components/navigation/navbar";
 import { Toaster } from "@/components/ui/toaster";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 export const metadata: Metadata = {
     title: "NMTC-HMS",
@@ -23,9 +24,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     return (
         <html lang="en">
             <body>
-                {session && <Navbar />}
-                {children}
-                <Toaster />
+                <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+                    {session && <Navbar />}
+                    <main className="bg-white dark:bg-neutral-900 min-h-screen">{children}</main>
+                    <Toaster />
+                </ThemeProvider>
             </body>
         </html>
     );

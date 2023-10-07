@@ -63,11 +63,11 @@ export default function Home() {
     };
 
     return (
-        <div className="w-screen h-screen flex flex-col items-center justify-center bg-emerald-100 px-3 space-y-10">
-            <h3 className="text-xl sm:text-3xl text-center text-emerald-900 tracking-wider max-w-sm sm:max-w-lg">
+        <div className="w-screen h-screen flex flex-col items-center justify-center px-3 space-y-10">
+            <h3 className="text-xl sm:text-3xl text-center text-emerald-900 dark:text-emerald-600 tracking-wider max-w-sm sm:max-w-lg">
                 Nursing and Midwifery Training College, Kumasi - HMS
             </h3>
-            <div className="bg-white w-full sm:w-1/4 p-5 sm:p-10 shadow-sm rounded-md space-y-5">
+            <div className="bg-white dark:bg-neutral-800 w-full sm:w-1/5 p-5 sm:p-10 shadow-sm rounded-md space-y-5">
                 <div className="text-center">
                     <h2 className="text-2xl font-bold">Login</h2>
                     <p className="text-gray-400 text-sm">Please login to get started</p>

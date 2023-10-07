@@ -15,9 +15,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import { MoonIcon, SunIcon } from "@radix-ui/react-icons";
 
 export default function Navbar() {
     const router = useRouter();
+    const { setTheme } = useTheme();
     const supbase = createClientComponentClient();
 
     const handleLogout = async () => {
@@ -32,43 +35,27 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="fixed z-[1000] w-full bg-emerald-700 h-16 flex items-center justify-center">
+        <nav className="fixed z-[1000] w-full bg-emerald-600 dark:bg-emerald-800 h-16 flex items-center justify-center">
             <div className="container flex items-center justify-between">
                 <div className="font-bold text-white tracking-widest flex items-center gap-2">
                     <MdLocalHospital size={26} color="red" /> <p className="text-sm sm:text-xl">NMTC-HMS</p>
                 </div>
-                <div className="hidden sm:flex items-center gap-10">
-                    <ul className="flex items-center gap-5 text-white">
-                        <Link href="/">
-                            <li>Home</li>
-                        </Link>
-                        <Link href="/">
-                            <li>About</li>
-                        </Link>
-                        <Link href="/">
-                            <li>Services</li>
-                        </Link>
-                        <Button onClick={handleLogout} className="bg-red-500">
-                            Logout
-                        </Button>
-                    </ul>
-                </div>
-                <div className="block sm:hidden">
+                <div className="flex items-center gap-3">
+                    <Button onClick={handleLogout} className="bg-red-500 dark:text-white">
+                        Logout
+                    </Button>
                     <DropdownMenu>
-                        <DropdownMenuTrigger>
-                            <HiMenuAlt3 className="text-white text-4xl border-2 border-white rounded-md active:outline-none" />
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline" size="icon" className="bg-white dark:bg-neutral-800">
+                                <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                                <MoonIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                                <span className="sr-only">Toggle theme</span>
+                            </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent className="outline-none right-4">
-                            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem>Home</DropdownMenuItem>
-                            <DropdownMenuItem>About</DropdownMenuItem>
-                            <DropdownMenuItem>Services</DropdownMenuItem>
-                            <DropdownMenuItem>
-                                <Button onClick={handleLogout} variant="destructive" className="w-full">
-                                    Logout
-                                </Button>
-                            </DropdownMenuItem>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuItem onClick={() => setTheme("light")}>Light</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setTheme("dark")}>Dark</DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => setTheme("system")}>System</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>

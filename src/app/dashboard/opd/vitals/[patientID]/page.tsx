@@ -1,18 +1,18 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import * as z from "zod";
+import React, { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../../../../../components/ui/form";
 
 import { Patient } from "../../../../../../types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { toast } from "@/components/ui/use-toast";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { vitalsFormSchema } from "@/schema/formSchemas";
+import { toast } from "../../../../../components/ui/use-toast";
+import { Input } from "../../../../../components/ui/input";
+import { Button } from "../../../../../components/ui/button";
+import { vitalsFormSchema } from "../../../../../schema/formSchemas";
 
 export default function Page() {
     const patientHealth = "good";
@@ -56,7 +56,7 @@ export default function Page() {
 
             const { error } = await supabase
                 .from("records")
-                .update({ vitals: { values }, status: "consulting" })
+                .update({ vitals: values, status: "consulting" })
                 .eq("patientID", patient?.patientID);
 
             if (!error) {

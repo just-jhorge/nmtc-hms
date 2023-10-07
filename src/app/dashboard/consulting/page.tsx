@@ -7,7 +7,7 @@ export default async function page() {
 
     if (patients.length === 0) {
         return (
-            <div>
+            <div className="container py-24">
                 <h3>You have no patients in line</h3>
             </div>
         );

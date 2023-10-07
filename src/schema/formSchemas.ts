@@ -68,3 +68,13 @@ export const vitalsFormSchema = z.object({
             })
     ),
 });
+
+export const consultaionFormSchema = z.object({
+    symptoms: z.string().nonempty({
+        message: "Please enter the symptoms of the patient",
+    }),
+    prescription: z.string(),
+    labs: z.enum(["lab", "pharmacy"], {
+        required_error: "You need to select if patient needs to take a lab",
+    }),
+});

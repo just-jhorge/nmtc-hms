@@ -74,7 +74,6 @@ export default function NewPatientForm() {
                 gender: values.gender,
                 contact: values.contact,
                 address: values.address,
-                vitals: {},
                 status: "opd",
             });
 
