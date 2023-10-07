@@ -15,13 +15,13 @@ import { Button } from "@/components/ui/button";
 import { vitalsFormSchema } from "@/schema/formSchemas";
 
 export default function Page() {
-    const patientHealth = 'good'
+    const patientHealth = "good";
     const [isLoading, setIsLoading] = useState(false);
     const [patient, setPatient] = useState<Patient | null>(null);
-    
+
     const router = useRouter();
     const supabase = createClientComponentClient();
-    
+
     const { patientID } = useParams();
 
     useEffect(() => {
@@ -52,16 +52,26 @@ export default function Page() {
 
     async function onSubmit(values: z.infer<typeof vitalsFormSchema>) {
         try {
-            toast({
-                title: "Successful. You submitted the following vitals",
-                description: (
-                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                        <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-                    </pre>
-                ),
-            });
+            setIsLoading(true);
+
+            const { error } = await supabase
+                .from("records")
+                .update({ vitals: { values }, status: "consulting" })
+                .eq("patientID", patient?.patientID);
+
+            if (!error) {
+                toast({
+                    title: "Success.",
+                    description: "Patient vitals added successfully",
+                });
+            }
+
+            router.refresh();
+            router.back();
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -156,7 +166,11 @@ export default function Page() {
                         </form>
                     </Form>
                 </div>
-                <div className={`w-full sm:w-1/4 ${patientHealth === 'good' ? 'bg-green-300' : 'bg-red-400'} shadow-md rounded-sm px-2.5 py-5`}>
+                <div
+                    className={`w-full sm:w-1/4 ${
+                        patientHealth === "good" ? "bg-green-300" : "bg-red-400"
+                    } shadow-md rounded-sm px-2.5 py-5`}
+                >
                     System suggestion goes here
                 </div>
             </div>
