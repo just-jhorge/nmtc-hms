@@ -74,7 +74,7 @@ export const consultaionFormSchema = z.object({
         message: "Please enter the symptoms of the patient",
     }),
     prescription: z.string(),
-    labs: z.enum(["lab", "pharmacy"], {
-        required_error: "You need to select if patient needs to take a lab",
-    }),
+    labs: z.string().nonempty(),
+    lab_type: z.string(),
+    lab_results: z.string(),
 });
