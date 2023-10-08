@@ -13,6 +13,7 @@ export interface Patient {
         pulseRate: number;
         respiration: number;
     };
-    symptons: {};
+    symptoms: string | undefined;
     status: string;
+    prescription: string;
 }

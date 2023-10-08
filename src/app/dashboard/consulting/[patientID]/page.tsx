@@ -52,6 +52,8 @@ export default function Page() {
 
     async function onSubmit(values: z.infer<typeof consultaionFormSchema>) {
         try {
+            setIsLoading(true);
+
             if (
                 (values.labs === "pharmacy" && !values.prescription) ||
                 (values.labs === "pharmacy" && values.lab_type)
@@ -74,11 +76,34 @@ export default function Page() {
                 return;
             }
 
-            console.log(values);
+            const { error } = await supabase
+                .from("records")
+                .update({
+                    symptoms: values.symptoms,
+                    prescription: values.prescription,
+                    status: values.labs,
+                    lab_type: values.lab_type,
+                    lab_results: values.lab_results,
+                })
+                .eq("patientID", patient?.patientID);
 
-            router.refresh();
+            if (error) {
+                toast({
+                    variant: "destructive",
+                    title: "Sorry",
+                    description: error.message,
+                });
+            }
+
+            if (!error) {
+                form.reset();
+                router.refresh();
+                router.back();
+            }
         } catch (error) {
             console.log(error);
+        } finally {
+            setIsLoading(false);
         }
     }
 

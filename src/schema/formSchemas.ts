@@ -78,3 +78,7 @@ export const consultaionFormSchema = z.object({
     lab_type: z.string(),
     lab_results: z.string(),
 });
+
+export const pharmacyFormSchema = z.object({
+    prescription: z.string(),
+});
