@@ -3,7 +3,7 @@ import { getPatientsInLine } from "@/actions/getPatientsInLine";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 
 export default async function page() {
-    const patients = await getPatientsInLine();
+    const patients = await getPatientsInLine("opd");
 
     if (patients.length === 0) {
         return (

@@ -12,10 +12,13 @@ import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 const formSchema = z.object({
-    staffEmail: z.string().email(),
-    password: z.string().min(6, {
-        message: "Password must be at least 6 characters.",
-    }),
+    staffEmail: z.string().email().nonempty(),
+    password: z
+        .string()
+        .min(6, {
+            message: "Password must be at least 6 characters.",
+        })
+        .nonempty(),
 });
 
 export default function Home() {

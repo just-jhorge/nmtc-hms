@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { getConsultingPatients } from "@/actions/getConsultingPatients";
+import { getPatientsInLine } from "@/actions/getPatientsInLine";
 
 export default async function page() {
-    const patients = await getConsultingPatients();
+    const patients = await getPatientsInLine("consulting");
 
     if (patients.length === 0) {
         return (
