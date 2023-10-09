@@ -17,3 +17,20 @@ export interface Patient {
     status: string;
     prescription: string;
 }
+
+export interface User {
+    created_at: string;
+    user_id: string;
+    email: string;
+    lastname: string;
+    othernames: string;
+    gender: string;
+    department: string;
+}
+
+export type Payment = {
+    id: string;
+    amount: number;
+    status: "pending" | "processing" | "success" | "failed";
+    email: string;
+};
