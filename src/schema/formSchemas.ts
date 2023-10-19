@@ -82,3 +82,25 @@ export const consultaionFormSchema = z.object({
 export const pharmacyFormSchema = z.object({
     prescription: z.string(),
 });
+
+export const userSignupSchema = z.object({
+    staffEmail: z.string().email().nonempty(),
+    password: z
+        .string()
+        .min(6, {
+            message: "Password must be at least 6 characters.",
+        })
+        .nonempty(),
+    confirmPassword: z
+        .string()
+        .min(6, {
+            message: "Password must be at least 6 characters.",
+        })
+        .nonempty(),
+    lastname: z.string().nonempty(),
+    othernames: z.string().nonempty(),
+    department: z.string().nonempty(),
+    gender: z.string({
+        required_error: "Please select an email to display.",
+    }),
+});

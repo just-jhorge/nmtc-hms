@@ -12,6 +12,7 @@ export default async function page() {
             </div>
         );
     }
+
     return (
         <div className="container py-24 space-y-5">
             <h3>Patients in line</h3>
