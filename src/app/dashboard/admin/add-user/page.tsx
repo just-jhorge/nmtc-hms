@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { userSignupSchema } from "@/schema/formSchemas";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { toast } from "@/components/ui/use-toast";
 
 export default function Home() {
     const [loading, setLoading] = useState(false);
@@ -33,35 +34,7 @@ export default function Home() {
     });
 
     const onSubmit = async (values: z.infer<typeof userSignupSchema>) => {
-        try {
-            setLoading(true);
-            const { data: authData, error } = await supabase.auth.signUp({
-                email: values.staffEmail,
-                password: values.password,
-            });
-
-            if (!error) {
-                const { error } = await supabase.from("users").upsert(
-                    {
-                        user_id: authData.user?.id,
-                        email: values.staffEmail,
-                        lastname: values.lastname,
-                        othernames: values.othernames,
-                        gender: values.gender,
-                        department: values.department,
-                    },
-                    { onConflict: "email" }
-                );
-            }
-
-            setLoading(false);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setLoading(false);
-            form.reset();
-            router.back();
-        }
+        console.log(values);
     };
 
     return (

@@ -13,12 +13,10 @@ const Dashboard: React.FC<DashboardProps> = ({ children, userDepartment }) => {
     const urlDepartment = pathname.split("/")[2];
 
     if (userDepartment === urlDepartment) {
-        console.log("allowed url");
+        return <>{children}</>;
     } else {
         redirect(`/dashboard/${userDepartment}`);
     }
-
-    return <>{children}</>;
 };
 
 export default Dashboard;
