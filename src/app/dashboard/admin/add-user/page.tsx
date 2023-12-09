@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { userSignupSchema } from "@/schema/formSchemas";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { toast } from "@/components/ui/use-toast";
 
 export default function Home() {
     const [loading, setLoading] = useState(false);
